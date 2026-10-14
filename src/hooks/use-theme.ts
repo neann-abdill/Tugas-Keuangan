@@ -1,14 +1,15 @@
+import { Colors, type ThemeColor } from '@/constants/theme';
+import { useAppTheme } from '@/hooks/use-app-theme';
+import { useData } from '@/store/data-context';
+
 /**
- * Learn more about light and dark modes:
- * https://docs.expo.dev/guides/color-schemes/
+ * Warna aktif aplikasi dengan urutan:
+ * preferensi pengguna di pengaturan > skema sistem.
  */
-
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
 export function useTheme() {
-  const scheme = useColorScheme();
-  const theme = scheme === 'unspecified' ? 'light' : scheme;
-
-  return Colors[theme];
+  const { settings } = useData();
+  const resolved = useAppTheme(settings.theme);
+  return Colors[resolved];
 }
+
+export type { ThemeColor };
